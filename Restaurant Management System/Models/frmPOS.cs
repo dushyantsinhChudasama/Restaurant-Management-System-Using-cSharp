@@ -207,78 +207,119 @@ namespace Restaurant_Management_System.Models
 
         private void btnKOT_Click(object sender, EventArgs e)
         {
-            // Save the data in database
-            string qry = "";
-            string qry2 = "";
-
-            if(MainID == 0) //Insert
+            if (OrderType == null)
             {
-                qry = @"Insert into tblMain_tbl Values (@aDate, @aTime, @status, @orderType, @total, @recieved, @change);
-                        Select SCOPE_IDENTITY()"; //this line will get recent added id value
-            }
-            else //Update
-            {
-                qry = @"Update tblMain_tbl Set status = @status, total =  @total, recieved =  @recieved, change = @change where MainID = @ID)";
+                guna2MessageDialog1.Show("Please select Order Type!!");
+                return;
             }
 
-            SqlCommand cmd = new SqlCommand(qry, MainClass.con);
-            cmd.Parameters.AddWithValue("@ID", MainID);
-            cmd.Parameters.AddWithValue("@aDate", Convert.ToDateTime(DateTime.Now.Date));
-            cmd.Parameters.AddWithValue("@aTime", DateTime.Now.ToShortTimeString());
-            cmd.Parameters.AddWithValue("@status", "Pending");
-            cmd.Parameters.AddWithValue("@orderType", OrderType);
-            cmd.Parameters.AddWithValue("@total", Convert.ToDouble(0));  // here the value is 0 becaues ve are saving data for temp value it wil be updated when the payment recieve
-            cmd.Parameters.AddWithValue("@recieved", Convert.ToDouble(0));
-            cmd.Parameters.AddWithValue("@change", Convert.ToDouble(0));
-
-            if(MainClass.con.State == ConnectionState.Closed) { MainClass.con.Open(); }
-            if (MainID == 0) 
+            if (guna2DataGridView1.Rows.Count == 0)
             {
-                MainID = Convert.ToInt32(cmd.ExecuteScalar()); 
-            }
-            else
-            {
-                cmd.ExecuteNonQuery();
+                guna2MessageDialog1.Show("No items to save!");
+                return;
             }
 
-            if (MainClass.con.State == ConnectionState.Open) { MainClass.con.Close(); }
+            string qryMain;
+            string qryDetail;
 
-            foreach (DataGridViewRow row in guna2DataGridView1.Rows)
+            // Determine if we are inserting or updating the main order
+            if (MainID == 0) // Insert
             {
-                detaildID = Convert.ToInt32(row.Cells["dgvId"].Value);
+                qryMain = @"INSERT INTO tblMain_tbl (aDate, aTime, status, orderType, total, recieved, change)
+                    VALUES (@aDate, @aTime, @status, @orderType, @total, @recieved, @change);
+                    SELECT SCOPE_IDENTITY();";  // Get the new ID
+            }
+            else // Update
+            {
+                qryMain = @"UPDATE tblMain_tbl 
+                    SET status = @status, total = @total, recieved = @recieved, change = @change 
+                    WHERE MainID = @ID;";
+            }
 
-                if(detaildID == 0)
+            try
+            {
+                using (SqlConnection con = MainClass.con)
                 {
-                    qry2 = "Insert into Details_tbl values (@MainID, @proID, @qty, @price, @amount)";
+                    if (con.State == ConnectionState.Closed) con.Open();
+
+                    using (SqlTransaction transaction = con.BeginTransaction())
+                    {
+                        // Save or update the main order details
+                        SqlCommand cmdMain = new SqlCommand(qryMain, con, transaction);
+                        cmdMain.Parameters.AddWithValue("@ID", MainID);
+                        cmdMain.Parameters.AddWithValue("@aDate", DateTime.Now.Date);
+                        cmdMain.Parameters.AddWithValue("@aTime", DateTime.Now.ToShortTimeString());
+                        cmdMain.Parameters.AddWithValue("@status", "Pending");
+                        cmdMain.Parameters.AddWithValue("@orderType", OrderType);
+                        cmdMain.Parameters.AddWithValue("@total", 0.0);  // Placeholder; will be updated on payment
+                        cmdMain.Parameters.AddWithValue("@recieved", 0.0);
+                        cmdMain.Parameters.AddWithValue("@change", 0.0);
+
+                        if (MainID == 0) // Insert and get the new MainID
+                        {
+                            MainID = Convert.ToInt32(cmdMain.ExecuteScalar());
+                        }
+                        else // Update existing order
+                        {
+                            cmdMain.ExecuteNonQuery();
+                        }
+
+                        // Loop through all rows in DataGridView to insert or update details
+                        foreach (DataGridViewRow row in guna2DataGridView1.Rows)
+                        {
+                            int detailID = Convert.ToInt32(row.Cells["dgvId"].Value);
+
+                            if (detailID == 0)
+                            {
+                                qryDetail = @"INSERT INTO Details_tbl (MainID, proID, qty, price, amount)
+                                      VALUES (@MainID, @proID, @qty, @price, @amount);";
+                            }
+                            else
+                            {
+                                qryDetail = @"UPDATE Details_tbl 
+                                      SET proID = @proID, qty = @qty, price = @price, amount = @amount 
+                                      WHERE DetailID = @ID;";
+                            }
+
+                            SqlCommand cmdDetail = new SqlCommand(qryDetail, con, transaction);
+                            cmdDetail.Parameters.AddWithValue("@ID", detailID);
+                            cmdDetail.Parameters.AddWithValue("@MainID", MainID);
+                            cmdDetail.Parameters.AddWithValue("@proID", Convert.ToInt32(row.Cells["dgvproID"].Value));
+                            cmdDetail.Parameters.AddWithValue("@qty", Convert.ToInt32(row.Cells["dgvQty"].Value));
+                            cmdDetail.Parameters.AddWithValue("@price", Convert.ToDouble(row.Cells["dgvPrice"].Value));
+                            cmdDetail.Parameters.AddWithValue("@amount", Convert.ToDouble(row.Cells["dgvAmount"].Value));
+
+                            cmdDetail.ExecuteNonQuery();
+                        }
+
+                        // Commit the transaction if everything is successful
+                        transaction.Commit();
+                    }
                 }
-                else
-                {
-                    qry2 = "Update Details_tbl Set proID = @proID, qty = @qty, price = @price, amount = @amount where DetailID = @ID";
 
-                }
-
-                SqlCommand cmd2 = new SqlCommand(qry2, MainClass.con);
-                cmd2.Parameters.AddWithValue("@ID", detaildID);
-                cmd2.Parameters.AddWithValue("@MainID", MainID);
-                cmd2.Parameters.AddWithValue("@proID", Convert.ToInt32(row.Cells["dgvproID"].Value));
-                cmd2.Parameters.AddWithValue("@qty", Convert.ToInt32(row.Cells["dgvQty"].Value));
-                cmd2.Parameters.AddWithValue("@price", Convert.ToDouble(row.Cells["dgvPrice"].Value));
-                cmd2.Parameters.AddWithValue("@amount", Convert.ToDouble(row.Cells["dgvAmount"].Value));
-
-                if (MainClass.con.State == ConnectionState.Closed) { MainClass.con.Open(); }
-                cmd2.ExecuteNonQuery();
-                if (MainClass.con.State == ConnectionState.Open) { MainClass.con.Close(); }
-
+                // Clear the UI after saving
                 guna2MessageDialog1.Show("Order Saved Successfully!");
-                MainID = 0;
-                detaildID = 0;
-                guna2DataGridView1.Rows.Clear();
-                lblTotal.Text = "";
-
+                ResetForm();
             }
+            catch (Exception ex)
+            {
+                guna2MessageDialog1.Show($"Error: {ex.Message}");
+            }
+        }
 
+        private void ResetForm()
+        {
+            // Reset the form to its initial state
+            MainID = 0;
+            detaildID = 0;
+            lblTotal.Text = "";
+            guna2DataGridView1.Rows.Clear();
         }
 
 
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

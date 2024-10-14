@@ -310,7 +310,7 @@ namespace Restaurant_Management_System
             this.btnOrderList.Name = "btnOrderList";
             this.btnOrderList.Size = new System.Drawing.Size(180, 45);
             this.btnOrderList.TabIndex = 1;
-            this.btnOrderList.Text = "Order List";
+            this.btnOrderList.Text = "Orders ";
             this.btnOrderList.Click += new System.EventHandler(this.btnOrderList_Click);
             // 
             // btnDashbaord
