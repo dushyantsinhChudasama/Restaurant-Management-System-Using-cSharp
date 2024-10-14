@@ -12,11 +12,16 @@ using System.Windows.Forms;
 
 namespace Restaurant_Management_System.views
 {
-    public partial class frmOrderView : Form
+    public partial class frmBillingview : Form
     {
-        public frmOrderView()
+        public frmBillingview()
         {
             InitializeComponent();
+        }
+
+        private void guna2Separator1_Click(object sender, EventArgs e)
+        {
+
         }
 
         public static String s = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\D.K CHUDASAMA\source\repos\Restaurant Management System\Restaurant Management System\RMS.mdf;Integrated Security=True";
@@ -29,16 +34,11 @@ namespace Restaurant_Management_System.views
             con.Open();
         }
 
-        private void btnAddOrder_Click(object sender, EventArgs e)
-        {
-            frmPOS frm = new frmPOS();
-            frm.ShowDialog();
-        }
-
-        private void frmOrderView_Load(object sender, EventArgs e)
-        {
-            GetOrders();
-        }
+        //private void btnAddOrder_Click(object sender, EventArgs e)
+        //{
+        //    frmPOS frm = new frmPOS();
+        //    frm.ShowDialog();
+        //}
 
         private void GetOrders()
         {
@@ -46,7 +46,7 @@ namespace Restaurant_Management_System.views
 
             flowLayoutPanel1.Controls.Clear();
 
-            string qry1 = @"select * from tblMain_tbl where status = 'Pending'";
+            string qry1 = @"select * from tblMain_tbl where status = 'Complete'";
             SqlCommand cmd1 = new SqlCommand(qry1, con);
             DataTable dt1 = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd1);
@@ -71,7 +71,7 @@ namespace Restaurant_Management_System.views
                 p2.Width = 230;
                 p2.Height = 125;
                 p2.FlowDirection = FlowDirection.TopDown;
-                p2.Margin = new Padding(0,0,0,0);
+                p2.Margin = new Padding(0, 0, 0, 0);
 
                 Label lb1 = new Label();
                 lb1.ForeColor = Color.White;
@@ -115,7 +115,7 @@ namespace Restaurant_Management_System.views
                 string qry2 = @"select * from tblMain_tbl m
                                 inner join Details_tbl d on m.MainID = d.MainID
                                 inner join products_tbl p on p.pID = d.proID
-                                where m.MainID = '"+mid+"'";
+                                where m.MainID = '" + mid + "'";
 
                 SqlCommand cmd2 = new SqlCommand(qry2, con);
                 DataTable dt2 = new DataTable();
@@ -144,19 +144,19 @@ namespace Restaurant_Management_System.views
                 b1.Size = new Size(170, 35);
                 b1.FillColor = Color.FromArgb(241, 85, 126);
                 b1.Margin = new Padding(20, 5, 3, 10);
-                b1.Text = "Complete Order";
+                b1.Text = "Fast Cash";
                 b1.Tag = dt1.Rows[i]["MainID"].ToString(); //to store the ID of Order
 
                 b1.Click += new EventHandler(b_click);
 
                 //button to delete or cancel order
-                
+
                 Guna.UI2.WinForms.Guna2Button b2 = new Guna.UI2.WinForms.Guna2Button();
                 b2.AutoRoundedCorners = true;
                 b2.Size = new Size(170, 35);
                 b2.FillColor = Color.FromArgb(241, 85, 126);
                 b2.Margin = new Padding(20, 5, 3, 10);
-                b2.Text = "Delete Order";
+                b2.Text = "Check Out";
                 b2.Tag = dt1.Rows[i]["MainID"].ToString(); //to store the ID of Order
 
                 b2.Click += new EventHandler(b2_click);
@@ -169,53 +169,25 @@ namespace Restaurant_Management_System.views
             }
         }
 
-        private void b2_click(object sender, EventArgs e)
+        private void b2_click(object sender, EventArgs e) // Check Out
         {
-            connect();
+            Guna.UI2.WinForms.Guna2Button btn = (Guna.UI2.WinForms.Guna2Button)sender;
+            int mainID = Convert.ToInt32(btn.Tag); // Get MainID from the button's Tag
 
-            int id = Convert.ToInt32((sender as Guna.UI2.WinForms.Guna2Button).Tag.ToString());
-
-            guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.YesNo;
-
-            if (guna2MessageDialog1.Show("Are You sure You want to Delete Order? ") == DialogResult.Yes)
-            {
-                string qry = @"delete from tblMain_tbl where MainID = '" + id + "'";
-
-                SqlCommand cmd = new SqlCommand(qry, con);
-                cmd.ExecuteNonQuery();
-
-                guna2MessageDialog1.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
-                guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
-
-                guna2MessageDialog1.Show("Completed Successfully...");
-            }
+            // Pass the MainID to frmCheckout via constructor
+            frmCheckout frm = new frmCheckout(mainID);
+            frm.ShowDialog(); // Open the checkout form as a dialog
         }
 
-        private void b_click(object sender, EventArgs e)
+
+        private void b_click(object sender, EventArgs e) //fastcash
         {
-            connect();
-
-            int id = Convert.ToInt32((sender as Guna.UI2.WinForms.Guna2Button).Tag.ToString());
-
-            guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.YesNo;
-
-            if(guna2MessageDialog1.Show("Are You sure You want to Complete? ") == DialogResult.Yes)
-            {
-                string qry = @"Update tblMain_tbl set status = 'Complete' where MainID = '" + id + "'";
-
-                SqlCommand cmd = new SqlCommand(qry, con);
-                cmd.ExecuteNonQuery();
-
-                guna2MessageDialog1.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
-                guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
-
-                guna2MessageDialog1.Show("Completed Successfully...");
-            }
+            throw new NotImplementedException();
         }
 
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        private void frmBillingview_Load(object sender, EventArgs e)
         {
-
+            GetOrders();
         }
     }
 }

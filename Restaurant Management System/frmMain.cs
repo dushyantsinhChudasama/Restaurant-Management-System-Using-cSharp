@@ -118,5 +118,10 @@ namespace Restaurant_Management_System
         {
             AddControl(new frmSpecialOrderView());
         }
+
+        private void btnBilling_Click(object sender, EventArgs e)
+        {
+            AddControl(new frmBillingview());
+        }
     }
 }

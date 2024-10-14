@@ -87,6 +87,19 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\frmbillingview.cs" />
+    <Compile Include="Models\frmBillList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\frmBillList.Designer.cs">
+      <DependentUpon>frmBillList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\frmCheckout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\frmCheckout.Designer.cs">
+      <DependentUpon>frmCheckout.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\frmInventoryAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +141,12 @@
     </Compile>
     <Compile Include="Models\ucProduct.Designer.cs">
       <DependentUpon>ucProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="views\frmBillingview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\frmBillingview.Designer.cs">
+      <DependentUpon>frmBillingview.cs</DependentUpon>
     </Compile>
     <Compile Include="views\frmInventoryView.cs">
       <SubType>Form</SubType>
@@ -208,8 +227,14 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Models\frmBillList.resx">
+      <DependentUpon>frmBillList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Models\frmCategoryAdd.resx">
       <DependentUpon>frmCategoryAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\frmCheckout.resx">
+      <DependentUpon>frmCheckout.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\frmInventoryAdd.resx">
       <DependentUpon>frmInventoryAdd.cs</DependentUpon>
@@ -247,6 +272,9 @@
     </Compile>
     <EmbeddedResource Include="SampleView.resx">
       <DependentUpon>SampleView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\frmBillingview.resx">
+      <DependentUpon>frmBillingview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\frmCategoryView.resx">
       <DependentUpon>frmCategoryView.cs</DependentUpon>

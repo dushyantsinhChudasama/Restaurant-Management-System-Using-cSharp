@@ -24,15 +24,16 @@ namespace Restaurant_Management_System.Models
         public int detaildID = 0;
         public string OrderType;
 
-        //public static string s = @"data source=(localdb)\mssqllocaldb;attachdbfilename=c:\users\d.k chudasama\source\repos\restaurant management system\restaurant management system\rms.mdf;integrated security=true";
+        public static String s = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\D.K CHUDASAMA\source\repos\Restaurant Management System\Restaurant Management System\RMS.mdf;Integrated Security=True";
 
-        //public static sqlconnection con;
+        public static SqlConnection con;
 
-        //public void connect()
-        //{
-        //    con = new sqlconnection(s);
-        //    con.open();
-        //}
+        void connect()
+        {
+            con = new SqlConnection(s);
+            con.Open();
+        }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -57,9 +58,9 @@ namespace Restaurant_Management_System.Models
 
             CategoryPanel.Controls.Clear();
 
-            if(dt.Rows.Count > 0)
+            if (dt.Rows.Count > 0)
             {
-                foreach(DataRow row in dt.Rows)
+                foreach (DataRow row in dt.Rows)
                 {
                     Guna.UI2.WinForms.Guna2Button b = new Guna.UI2.WinForms.Guna2Button();
                     b.FillColor = Color.FromArgb(50, 55, 89);
@@ -75,7 +76,7 @@ namespace Restaurant_Management_System.Models
             }
         }
 
-        private void b_Click(object sender, EventArgs e)    
+        private void b_Click(object sender, EventArgs e)
         {
             Guna.UI2.WinForms.Guna2Button b = (Guna.UI2.WinForms.Guna2Button)sender;
             foreach (var item in ProductPanel.Controls)
@@ -85,7 +86,7 @@ namespace Restaurant_Management_System.Models
             }
         }
 
-        private void AddItems(string id,String proID,  string name, string cat, string price, Image pimage)
+        private void AddItems(string id, String proID, string name, string cat, string price, Image pimage)
         {
             var w = new ucProduct()
             {
@@ -115,7 +116,7 @@ namespace Restaurant_Management_System.Models
                     }
                 }
                 //this line will add new product in data grid view
-                guna2DataGridView1.Rows.Add(new object[] { 0,0, wdg.id, wdg.PName, 1, wdg.PPrice, wdg.PPrice }); //here first 0 for srNo and second 0 for from id
+                guna2DataGridView1.Rows.Add(new object[] { 0, 0, wdg.id, wdg.PName, 1, wdg.PPrice, wdg.PPrice }); //here first 0 for srNo and second 0 for from id
                 GetTotal();
             };
         }
@@ -133,17 +134,17 @@ namespace Restaurant_Management_System.Models
             foreach (DataRow item in dt.Rows)
             {
                 Byte[] imagearray = (byte[])item["pImage"];
-               // byte[] imagebytearray = imagearray;
+                // byte[] imagebytearray = imagearray;
 
                 //this code will call above AddItems function to add items
-                AddItems("0",item["pID"].ToString(), item["pName"].ToString(), item["catName"].ToString(),
+                AddItems("0", item["pID"].ToString(), item["pName"].ToString(), item["catName"].ToString(),
                     item["pPrice"].ToString(), Image.FromStream(new MemoryStream(imagearray)));
             }
         }
 
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
-            foreach(var item in ProductPanel.Controls)
+            foreach (var item in ProductPanel.Controls)
             {
                 var pro = (ucProduct)item;
                 pro.Visible = pro.PName.ToLower().Contains(txtSearch.Text.Trim().ToLower());
@@ -173,15 +174,20 @@ namespace Restaurant_Management_System.Models
         {
             double tot = 0;
 
-            lblTotal.Text = "";
-
-            foreach (DataGridViewRow item in guna2DataGridView1.Rows)
+            foreach (DataGridViewRow row in guna2DataGridView1.Rows)
             {
-                tot += double.Parse(item.Cells["dgvAmount"].Value.ToString());
+                // Check if the row is not empty and has a valid amount value
+                if (row.Cells["dgvAmount"].Value != null &&
+                    double.TryParse(row.Cells["dgvAmount"].Value.ToString(), out double amount))
+                {
+                    tot += amount;
+                }
             }
 
+            // Update the total label with formatted value
             lblTotal.Text = tot.ToString("N2");
         }
+
 
         private void btnNew_Click(object sender, EventArgs e)
         {
@@ -219,62 +225,61 @@ namespace Restaurant_Management_System.Models
                 return;
             }
 
-            string qryMain;
-            string qryDetail;
-
-            // Determine if we are inserting or updating the main order
-            if (MainID == 0) // Insert
-            {
-                qryMain = @"INSERT INTO tblMain_tbl (aDate, aTime, status, orderType, total, recieved, change)
-                    VALUES (@aDate, @aTime, @status, @orderType, @total, @recieved, @change);
-                    SELECT SCOPE_IDENTITY();";  // Get the new ID
-            }
-            else // Update
-            {
-                qryMain = @"UPDATE tblMain_tbl 
-                    SET status = @status, total = @total, recieved = @recieved, change = @change 
-                    WHERE MainID = @ID;";
-            }
+            string qryMain, qryDetail;
 
             try
             {
                 SqlConnection con = MainClass.con;
                 if (con.State == ConnectionState.Closed) con.Open();
 
-                // Save or update the main order details
+                // Determine if we need to INSERT or UPDATE the Main order
+                if (MainID == 0) // Insert a new main order
+                {
+                    qryMain = @"INSERT INTO tblMain_tbl (aDate, aTime, status, orderType, total, recieved, change)
+                        VALUES (@aDate, @aTime, @status, @orderType, @total, @recieved, @change);
+                        SELECT SCOPE_IDENTITY();"; // Get new MainID
+                }
+                else // Update the existing order
+                {
+                    qryMain = @"UPDATE tblMain_tbl 
+                        SET status = @status, total = @total, recieved = @recieved, change = @change 
+                        WHERE MainID = @ID;";
+                }
+
+                // Execute Main Order Query
                 SqlCommand cmdMain = new SqlCommand(qryMain, con);
                 cmdMain.Parameters.AddWithValue("@ID", MainID);
                 cmdMain.Parameters.AddWithValue("@aDate", DateTime.Now.Date);
                 cmdMain.Parameters.AddWithValue("@aTime", DateTime.Now.ToShortTimeString());
                 cmdMain.Parameters.AddWithValue("@status", "Pending");
                 cmdMain.Parameters.AddWithValue("@orderType", OrderType);
-                cmdMain.Parameters.AddWithValue("@total", 0.0);  // Placeholder; will be updated on payment
+                cmdMain.Parameters.AddWithValue("@total", Convert.ToDouble(lblTotal.Text));
                 cmdMain.Parameters.AddWithValue("@recieved", 0.0);
                 cmdMain.Parameters.AddWithValue("@change", 0.0);
 
-                if (MainID == 0) // Insert and get the new MainID
+                if (MainID == 0) // Insert and get new MainID
                 {
                     MainID = Convert.ToInt32(cmdMain.ExecuteScalar());
                 }
-                else // Update existing order
+                else // Update existing main order
                 {
                     cmdMain.ExecuteNonQuery();
                 }
 
-                // Loop through all rows in DataGridView to insert or update details
+                // Insert or Update order details for each product
                 foreach (DataGridViewRow row in guna2DataGridView1.Rows)
                 {
-                    int detailID = Convert.ToInt32(row.Cells["dgvId"].Value);
+                    int detailID = Convert.ToInt32(row.Cells["dgvId"].Value); // Check if the detail exists
 
-                    if (detailID == 0)
+                    if (detailID == 0) // New product detail, INSERT
                     {
-                        qryDetail = @"INSERT INTO Details_tbl (MainID, proID, qty, price, amount)
+                        qryDetail = @"INSERT INTO Details_tbl (MainID, proID, qty, price, amount) 
                               VALUES (@MainID, @proID, @qty, @price, @amount);";
                     }
-                    else
+                    else // Existing detail, UPDATE
                     {
                         qryDetail = @"UPDATE Details_tbl 
-                              SET proID = @proID, qty = @qty, price = @price, amount = @amount 
+                              SET qty = @qty, price = @price, amount = @amount 
                               WHERE DetailID = @ID;";
                     }
 
@@ -290,13 +295,14 @@ namespace Restaurant_Management_System.Models
                 }
 
                 guna2MessageDialog1.Show("Order Saved Successfully!");
-                ResetForm(); // Clear the form after saving
+                ResetForm(); // Reset form after saving
             }
             catch (Exception ex)
             {
                 guna2MessageDialog1.Show($"Error: {ex.Message}");
             }
         }
+
 
 
         private void ResetForm()
@@ -313,5 +319,66 @@ namespace Restaurant_Management_System.Models
         {
 
         }
+
+        public int id = 0;
+
+        private void btnBillList_Click(object sender, EventArgs e)
+        {
+            frmBillList frm = new frmBillList();
+            frm.ShowDialog();
+
+            if (frm.MainID > 0)
+            {
+                id = frm.MainID;
+                LoadEnteries();
+                GetTotal();
+            }
+        }
+
+        private void LoadEnteries()
+        {
+            connect();
+
+            string qry = @"SELECT * FROM tblMain_tbl m
+                   INNER JOIN Details_tbl d ON m.MainID = d.MainID
+                   INNER JOIN products_tbl p ON p.pID = d.proID
+                   WHERE m.MainID = @ID";
+
+            SqlCommand cmd2 = new SqlCommand(qry, con);
+            cmd2.Parameters.AddWithValue("@ID", id);
+            DataTable dt2 = new DataTable();
+            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+            da2.Fill(dt2);
+
+            //checking order type
+
+            if(dt2.Rows[0]["orderType"].ToString() == "Delivery")
+            {
+                btnDelivery.Checked = true;
+            }
+            else if (dt2.Rows[0]["orderType"].ToString() == "Take Away")
+            {
+                btnTake.Checked = true;
+            }
+            else
+            {
+                btnDin.Checked = true;
+            }
+
+
+            guna2DataGridView1.Rows.Clear();
+
+            foreach (DataRow item in dt2.Rows)
+            {
+                object[] obj = {
+                                0, item["DetailID"], item["proID"], item["pName"],
+                                item["qty"], item["price"], item["amount"]
+                                };
+                guna2DataGridView1.Rows.Add(obj);
+            }
+
+            GetTotal(); // Update the total after loading entries
+        }
+
     }
 }

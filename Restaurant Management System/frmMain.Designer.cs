@@ -224,6 +224,7 @@ namespace Restaurant_Management_System
             this.btnBilling.Size = new System.Drawing.Size(180, 45);
             this.btnBilling.TabIndex = 1;
             this.btnBilling.Text = "Billing";
+            this.btnBilling.Click += new System.EventHandler(this.btnBilling_Click);
             // 
             // btnCategory
             // 

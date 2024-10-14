@@ -154,9 +154,45 @@ namespace Restaurant_Management_System.views
                 b1.Tag = dt1.Rows[i]["MainID"].ToString(); //to store the ID of Order
 
                 b1.Click += new EventHandler(b_click);
+
+                //button to delete or cancel order
+
+                Guna.UI2.WinForms.Guna2Button b2 = new Guna.UI2.WinForms.Guna2Button();
+                b2.AutoRoundedCorners = true;
+                b2.Size = new Size(170, 35);
+                b2.FillColor = Color.FromArgb(241, 85, 126);
+                b2.Margin = new Padding(20, 5, 3, 10);
+                b2.Text = "Delete Order";
+                b2.Tag = dt1.Rows[i]["MainID"].ToString(); //to store the ID of Order
+
+                b2.Click += new EventHandler(b2_click);
+
                 p1.Controls.Add(b1);
+                p1.Controls.Add(b2);
 
                 flowLayoutPanel1.Controls.Add(p1);
+            }
+        }
+
+        private void b2_click(object sender, EventArgs e)
+        {
+            connect();
+
+            int id = Convert.ToInt32((sender as Guna.UI2.WinForms.Guna2Button).Tag.ToString());
+
+            guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.YesNo;
+
+            if (guna2MessageDialog1.Show("Are You sure You want to Delete Order? ") == DialogResult.Yes)
+            {
+                string qry = @"delete from tblMain_tbl where MainID = '" + id + "'";
+
+                SqlCommand cmd = new SqlCommand(qry, con);
+                cmd.ExecuteNonQuery();
+
+                guna2MessageDialog1.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
+                guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
+
+                guna2MessageDialog1.Show("Completed Successfully...");
             }
         }
 

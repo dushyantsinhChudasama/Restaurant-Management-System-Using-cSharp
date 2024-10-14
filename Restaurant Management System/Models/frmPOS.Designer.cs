@@ -210,6 +210,7 @@ namespace Restaurant_Management_System.Models
             this.btnBillList.Size = new System.Drawing.Size(78, 78);
             this.btnBillList.TabIndex = 2;
             this.btnBillList.Text = "Bill List";
+            this.btnBillList.Click += new System.EventHandler(this.btnBillList_Click);
             // 
             // btnNew
             // 
