@@ -99,6 +99,12 @@
     <Compile Include="Models\frmPOS.Designer.cs">
       <DependentUpon>frmPOS.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\frmPOSSpecialOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\frmPOSSpecialOrder.Designer.cs">
+      <DependentUpon>frmPOSSpecialOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\frmProductsAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,11 +141,18 @@
     <Compile Include="views\frmOrderView.Designer.cs">
       <DependentUpon>frmOrderView.cs</DependentUpon>
     </Compile>
+    <Compile Include="views\frmPOSSpecial.cs" />
     <Compile Include="views\frmProductview.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="views\frmProductview.Designer.cs">
       <DependentUpon>frmProductview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="views\frmSpecialOrderView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\frmSpecialOrderView.Designer.cs">
+      <DependentUpon>frmSpecialOrderView.cs</DependentUpon>
     </Compile>
     <Compile Include="views\frmStaffView.cs">
       <SubType>Form</SubType>
@@ -204,6 +217,9 @@
     <EmbeddedResource Include="Models\frmPOS.resx">
       <DependentUpon>frmPOS.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Models\frmPOSSpecialOrder.resx">
+      <DependentUpon>frmPOSSpecialOrder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Models\frmProductsAdd.resx">
       <DependentUpon>frmProductsAdd.cs</DependentUpon>
     </EmbeddedResource>
@@ -243,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="views\frmProductview.resx">
       <DependentUpon>frmProductview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\frmSpecialOrderView.resx">
+      <DependentUpon>frmSpecialOrderView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\frmStaffView.resx">
       <DependentUpon>frmStaffView.cs</DependentUpon>

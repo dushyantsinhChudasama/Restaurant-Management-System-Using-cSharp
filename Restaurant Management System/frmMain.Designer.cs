@@ -290,6 +290,7 @@ namespace Restaurant_Management_System
             this.btnSpecialOrders.TabIndex = 1;
             this.btnSpecialOrders.Text = "Special Orders";
             this.btnSpecialOrders.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnSpecialOrders.Click += new System.EventHandler(this.btnSpecialOrders_Click);
             // 
             // btnOrderList
             // 

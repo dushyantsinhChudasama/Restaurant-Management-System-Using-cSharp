@@ -113,5 +113,10 @@ namespace Restaurant_Management_System
         {
             AddControl(new frmOrderView());
         }
+
+        private void btnSpecialOrders_Click(object sender, EventArgs e)
+        {
+            AddControl(new frmSpecialOrderView());
+        }
     }
 }

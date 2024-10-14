@@ -2,22 +2,30 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using System.IO;
-using System.Collections;
 
 namespace Restaurant_Management_System.Models
 {
-    public partial class frmPOS : Form
+    public partial class frmPOSSpecialOrder : Form
     {
-        public frmPOS()
+        public frmPOSSpecialOrder()
         {
             InitializeComponent();
+        }
+
+        private void frmPOSSpecialOrder_Load(object sender, EventArgs e)
+        {
+            guna2DataGridView1.BorderStyle = BorderStyle.FixedSingle;
+            AddCategory();
+
+            ProductPanel.Controls.Clear();
+            LoadProducts();
         }
 
         public int MainID = 0;
@@ -33,19 +41,20 @@ namespace Restaurant_Management_System.Models
         //    con = new sqlconnection(s);
         //    con.open();
         //}
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void frmPOS_Load(object sender, EventArgs e)
-        {
-            guna2DataGridView1.BorderStyle = BorderStyle.FixedSingle;
-            AddCategory();
+        //private void frmPOS_Load(object sender, EventArgs e)
+        //{
+        //    guna2DataGridView1.BorderStyle = BorderStyle.FixedSingle;
+        //    AddCategory();
 
-            ProductPanel.Controls.Clear();
-            LoadProducts();
-        }
+        //    ProductPanel.Controls.Clear();
+        //    LoadProducts();
+        //}
 
         private void AddCategory()
         {
@@ -57,9 +66,9 @@ namespace Restaurant_Management_System.Models
 
             CategoryPanel.Controls.Clear();
 
-            if(dt.Rows.Count > 0)
+            if (dt.Rows.Count > 0)
             {
-                foreach(DataRow row in dt.Rows)
+                foreach (DataRow row in dt.Rows)
                 {
                     Guna.UI2.WinForms.Guna2Button b = new Guna.UI2.WinForms.Guna2Button();
                     b.FillColor = Color.FromArgb(50, 55, 89);
@@ -75,7 +84,7 @@ namespace Restaurant_Management_System.Models
             }
         }
 
-        private void b_Click(object sender, EventArgs e)    
+        private void b_Click(object sender, EventArgs e)
         {
             Guna.UI2.WinForms.Guna2Button b = (Guna.UI2.WinForms.Guna2Button)sender;
             foreach (var item in ProductPanel.Controls)
@@ -85,7 +94,7 @@ namespace Restaurant_Management_System.Models
             }
         }
 
-        private void AddItems(string id,String proID,  string name, string cat, string price, Image pimage)
+        private void AddItems(string id, String proID, string name, string cat, string price, Image pimage)
         {
             var w = new ucProduct()
             {
@@ -115,9 +124,22 @@ namespace Restaurant_Management_System.Models
                     }
                 }
                 //this line will add new product in data grid view
-                guna2DataGridView1.Rows.Add(new object[] { 0,0, wdg.id, wdg.PName, 1, wdg.PPrice, wdg.PPrice }); //here first 0 for srNo and second 0 for from id
+                guna2DataGridView1.Rows.Add(new object[] { 0, 0, wdg.id, wdg.PName, 1, wdg.PPrice, wdg.PPrice }); //here first 0 for srNo and second 0 for from id
                 GetTotal();
+                SrNO();
             };
+        }
+
+        private void SrNO()
+        {
+                int count = 1; // Start from 1
+
+                foreach (DataGridViewRow row in guna2DataGridView1.Rows)
+                {
+                    row.Cells["dgvSno"].Value = count; // Ensure the column name is correct
+                    count++;
+                }
+
         }
 
         //Getting products for show from database
@@ -133,17 +155,17 @@ namespace Restaurant_Management_System.Models
             foreach (DataRow item in dt.Rows)
             {
                 Byte[] imagearray = (byte[])item["pImage"];
-               // byte[] imagebytearray = imagearray;
+                // byte[] imagebytearray = imagearray;
 
                 //this code will call above AddItems function to add items
-                AddItems("0",item["pID"].ToString(), item["pName"].ToString(), item["catName"].ToString(),
+                AddItems("0", item["pID"].ToString(), item["pName"].ToString(), item["catName"].ToString(),
                     item["pPrice"].ToString(), Image.FromStream(new MemoryStream(imagearray)));
             }
         }
 
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
-            foreach(var item in ProductPanel.Controls)
+            foreach (var item in ProductPanel.Controls)
             {
                 var pro = (ucProduct)item;
                 pro.Visible = pro.PName.ToLower().Contains(txtSearch.Text.Trim().ToLower());
@@ -204,7 +226,6 @@ namespace Restaurant_Management_System.Models
         {
             OrderType = "Din in";
         }
-
         private void btnKOT_Click(object sender, EventArgs e)
         {
             if (OrderType == null)
@@ -225,8 +246,8 @@ namespace Restaurant_Management_System.Models
             // Determine if we are inserting or updating the main order
             if (MainID == 0) // Insert
             {
-                qryMain = @"INSERT INTO tblMain_tbl (aDate, aTime, status, orderType, total, recieved, change)
-                    VALUES (@aDate, @aTime, @status, @orderType, @total, @recieved, @change);
+                qryMain = @"INSERT INTO tblMain_tbl (aDate, aTime, status, orderType, total, recieved, change, isSpecial)
+                    VALUES (@aDate, @aTime, @status, @orderType, @total, @recieved, @change, @isSpecial);
                     SELECT SCOPE_IDENTITY();";  // Get the new ID
             }
             else // Update
@@ -251,6 +272,7 @@ namespace Restaurant_Management_System.Models
                 cmdMain.Parameters.AddWithValue("@total", 0.0);  // Placeholder; will be updated on payment
                 cmdMain.Parameters.AddWithValue("@recieved", 0.0);
                 cmdMain.Parameters.AddWithValue("@change", 0.0);
+                cmdMain.Parameters.AddWithValue("@isSpecial", 1);
 
                 if (MainID == 0) // Insert and get the new MainID
                 {
@@ -289,8 +311,9 @@ namespace Restaurant_Management_System.Models
                     cmdDetail.ExecuteNonQuery();
                 }
 
+                // Show success message and clear the form
                 guna2MessageDialog1.Show("Order Saved Successfully!");
-                ResetForm(); // Clear the form after saving
+                ResetForm();
             }
             catch (Exception ex)
             {
@@ -308,10 +331,9 @@ namespace Restaurant_Management_System.Models
             guna2DataGridView1.Rows.Clear();
         }
 
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        private void btnExit_Click_1(object sender, EventArgs e)
         {
-
+            this.Close();
         }
     }
 }

@@ -82,9 +82,9 @@ namespace Restaurant_Management_System.views
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(55, 50);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(159, 33);
+            this.label2.Size = new System.Drawing.Size(113, 33);
             this.label2.TabIndex = 12;
-            this.label2.Text = "Orders List\r\n";
+            this.label2.Text = "Orders ";
             // 
             // flowLayoutPanel1
             // 
