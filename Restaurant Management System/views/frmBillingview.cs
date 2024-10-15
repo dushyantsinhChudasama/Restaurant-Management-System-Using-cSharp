@@ -182,7 +182,44 @@ namespace Restaurant_Management_System.views
 
         private void b_click(object sender, EventArgs e) //fastcash
         {
-            throw new NotImplementedException();
+                Guna.UI2.WinForms.Guna2Button btn = (Guna.UI2.WinForms.Guna2Button)sender;
+                int mainID = Convert.ToInt32(btn.Tag); // Retrieve MainID from the button's Tag
+
+                connect();
+
+                //Retrieve the total amount from the database for this MainID
+                string qry = "SELECT total FROM tblMain_tbl WHERE MainID = @MainID";
+                SqlCommand cmd = new SqlCommand(qry, con);
+                cmd.Parameters.AddWithValue("@MainID", mainID);
+
+                double totalAmount = (double)cmd.ExecuteScalar(); 
+
+                if (totalAmount == 0)
+                {
+                    MessageBox.Show("Error retrieving the total amount.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Step 2: Update the status to 'Paid' and set received amount to total
+                string updateQuery = @"UPDATE tblMain_tbl SET recieved = @received, status = 'Paid' WHERE MainID = @MainID";
+
+                SqlCommand updateCmd = new SqlCommand(updateQuery, con);
+                updateCmd.Parameters.AddWithValue("@received", totalAmount); // Received amount is equal to total
+                updateCmd.Parameters.AddWithValue("@MainID", mainID);
+
+                int rowsAffected = updateCmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    AddMessageBox.Show("Order paid successfully!");
+                    GetOrders(); // Refresh the orders view after payment
+                }
+                else
+                {
+                    MessageBox.Show("Failed to update the order status.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            
+
         }
 
         private void frmBillingview_Load(object sender, EventArgs e)

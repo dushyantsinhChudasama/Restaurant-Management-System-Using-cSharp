@@ -33,7 +33,7 @@ namespace Restaurant_Management_System.views
             this.label2 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.btnAddOrder = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2MessageDialog1 = new Guna.UI2.WinForms.Guna2MessageDialog();
+            this.AddMessageBox = new Guna.UI2.WinForms.Guna2MessageDialog();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -87,14 +87,14 @@ namespace Restaurant_Management_System.views
             this.btnAddOrder.TabIndex = 15;
             this.btnAddOrder.Text = "View Past Bills";
             // 
-            // guna2MessageDialog1
+            // AddMessageBox
             // 
-            this.guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
-            this.guna2MessageDialog1.Caption = "RMS";
-            this.guna2MessageDialog1.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
-            this.guna2MessageDialog1.Parent = null;
-            this.guna2MessageDialog1.Style = Guna.UI2.WinForms.MessageDialogStyle.Light;
-            this.guna2MessageDialog1.Text = null;
+            this.AddMessageBox.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
+            this.AddMessageBox.Caption = "RMS";
+            this.AddMessageBox.Icon = Guna.UI2.WinForms.MessageDialogIcon.Question;
+            this.AddMessageBox.Parent = null;
+            this.AddMessageBox.Style = Guna.UI2.WinForms.MessageDialogStyle.Light;
+            this.AddMessageBox.Text = null;
             // 
             // frmBillingview
             // 
@@ -120,6 +120,6 @@ namespace Restaurant_Management_System.views
         public System.Windows.Forms.Label label2;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private Guna.UI2.WinForms.Guna2Button btnAddOrder;
-        private Guna.UI2.WinForms.Guna2MessageDialog guna2MessageDialog1;
+        private Guna.UI2.WinForms.Guna2MessageDialog AddMessageBox;
     }
 }

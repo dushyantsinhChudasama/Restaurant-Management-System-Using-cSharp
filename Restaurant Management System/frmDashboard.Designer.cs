@@ -35,7 +35,7 @@ namespace Restaurant_Management_System
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.RevenuePanel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.lblTotal = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.ExpensePanel = new System.Windows.Forms.Panel();
@@ -49,9 +49,7 @@ namespace Restaurant_Management_System
             this.label13 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.RevenuePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -107,12 +105,13 @@ namespace Restaurant_Management_System
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(140, 25);
             this.comboBox1.TabIndex = 3;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // RevenuePanel
             // 
             this.RevenuePanel.BackColor = System.Drawing.Color.White;
             this.RevenuePanel.Controls.Add(this.pictureBox1);
-            this.RevenuePanel.Controls.Add(this.label10);
+            this.RevenuePanel.Controls.Add(this.lblTotal);
             this.RevenuePanel.Controls.Add(this.label9);
             this.RevenuePanel.Controls.Add(this.label4);
             this.RevenuePanel.Location = new System.Drawing.Point(21, 170);
@@ -133,15 +132,15 @@ namespace Restaurant_Management_System
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
             // 
-            // label10
+            // lblTotal
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(9, 118);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(139, 47);
-            this.label10.TabIndex = 8;
-            this.label10.Text = "₹ 10000";
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotal.Location = new System.Drawing.Point(9, 118);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(139, 47);
+            this.lblTotal.TabIndex = 8;
+            this.lblTotal.Text = "₹ 10000";
             // 
             // label9
             // 
@@ -286,15 +285,6 @@ namespace Restaurant_Management_System
             this.label14.TabIndex = 11;
             this.label14.Text = "Total Orders";
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Location = new System.Drawing.Point(21, 417);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(720, 263);
-            this.panel1.TabIndex = 5;
-            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
@@ -304,16 +294,6 @@ namespace Restaurant_Management_System
             this.panel2.Size = new System.Drawing.Size(280, 263);
             this.panel2.TabIndex = 5;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(24, 377);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(176, 32);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Recent Orders";
             // 
             // label8
             // 
@@ -333,8 +313,6 @@ namespace Restaurant_Management_System
             this.ClientSize = new System.Drawing.Size(1170, 706);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.SalesPanel);
             this.Controls.Add(this.ExpensePanel);
             this.Controls.Add(this.RevenuePanel);
@@ -371,10 +349,9 @@ namespace Restaurant_Management_System
         private System.Windows.Forms.Panel RevenuePanel;
         private System.Windows.Forms.Panel ExpensePanel;
         private System.Windows.Forms.Panel SalesPanel;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label11;
@@ -383,7 +360,6 @@ namespace Restaurant_Management_System
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
