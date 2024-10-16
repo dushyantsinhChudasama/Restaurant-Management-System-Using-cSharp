@@ -36,6 +36,8 @@ namespace Restaurant_Management_System
             lblDate.Text = DateTime.Now.ToShortDateString();
             lblTime.Text = DateTime.Now.ToShortTimeString();
             lblDay.Text = DateTime.Now.ToString("dddd");
+
+            AddControl(new frmDashboard());
         }
 
         private void btnExit_Click(object sender, EventArgs e)

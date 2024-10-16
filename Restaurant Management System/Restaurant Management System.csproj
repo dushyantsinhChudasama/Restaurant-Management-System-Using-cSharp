@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmCategories.cs" />
     <Compile Include="frmDashboard.cs">
       <SubType>Form</SubType>
     </Compile>

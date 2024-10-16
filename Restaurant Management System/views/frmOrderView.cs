@@ -188,6 +188,8 @@ namespace Restaurant_Management_System.views
                 guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
 
                 guna2MessageDialog1.Show("Completed Successfully...");
+
+                GetOrders();
             }
         }
 
@@ -210,6 +212,8 @@ namespace Restaurant_Management_System.views
                 guna2MessageDialog1.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
 
                 guna2MessageDialog1.Show("Completed Successfully...");
+
+                GetOrders();
             }
         }
 
