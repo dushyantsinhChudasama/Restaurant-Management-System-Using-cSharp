@@ -312,6 +312,7 @@ namespace Restaurant_Management_System.Models
             this.ProductPanel.Name = "ProductPanel";
             this.ProductPanel.Size = new System.Drawing.Size(716, 453);
             this.ProductPanel.TabIndex = 7;
+            this.ProductPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.ProductPanel_Paint);
             // 
             // guna2DataGridView1
             // 

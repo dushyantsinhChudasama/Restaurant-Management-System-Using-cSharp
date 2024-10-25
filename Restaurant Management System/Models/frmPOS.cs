@@ -380,5 +380,9 @@ namespace Restaurant_Management_System.Models
             GetTotal(); // Update the total after loading entries
         }
 
+        private void ProductPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

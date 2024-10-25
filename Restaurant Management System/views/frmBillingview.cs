@@ -211,13 +211,16 @@ namespace Restaurant_Management_System.views
 
                 if (rowsAffected > 0)
                 {
-                    AddMessageBox.Show("Order paid successfully!");
+                    frmCustName frm = new frmCustName(mainID);
+                    frm.ShowDialog(); // Open the customer name form as a dialog
                     GetOrders(); // Refresh the orders view after payment
                 }
                 else
                 {
                     MessageBox.Show("Failed to update the order status.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
+                //add code for crystal report here
             
 
         }

@@ -76,9 +76,18 @@ namespace Restaurant_Management_System.Models
             cmd.Parameters.AddWithValue("@MainID", MainID); // Use the passed MainID
 
             cmd.ExecuteNonQuery();
-            AddMessageBox.Show("Order paid successfully!");
-            //MessageBox.Show(" marked as paid successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            frmCustName frm = new frmCustName(MainID);
+            frm.ShowDialog();
+
+            //AddMessageBox.Show("Order paid successfully!");
             this.Close(); // Close the checkout form
+
+         
+            LoadOrderDetails();
+
+           //Code of cyrsral report for billing here
+
         }
 
         private void LoadOrderDetails()
