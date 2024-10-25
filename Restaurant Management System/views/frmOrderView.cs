@@ -215,6 +215,8 @@ namespace Restaurant_Management_System.views
 
                 GetOrders();
             }
+
+            GetOrders();
         }
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)

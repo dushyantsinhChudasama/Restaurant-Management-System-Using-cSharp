@@ -50,6 +50,28 @@ namespace Restaurant_Management_System.Models
 
         private void AddCategory()
         {
+
+            Guna.UI2.WinForms.Guna2Button allCategoriesButton = new Guna.UI2.WinForms.Guna2Button
+            {
+                Text = "All Categories",
+                FillColor = Color.FromArgb(50, 55, 89),
+                Size = new Size(186, 45),
+                ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton
+            };
+
+            // Event for click - show all products
+            allCategoriesButton.Click += (sender, e) =>
+            {
+                foreach (Control item in ProductPanel.Controls)
+                {
+                    if (item is ucProduct pro)
+                    {
+                        pro.Visible = true; // Show all products
+                    }
+                }
+            };
+
+
             string qry = "Select * from category";
             SqlCommand cmd = new SqlCommand(qry, MainClass.con);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -57,6 +79,9 @@ namespace Restaurant_Management_System.Models
             da.Fill(dt);
 
             CategoryPanel.Controls.Clear();
+
+            // Add the "All Categories" button to the CategoryPanel
+            CategoryPanel.Controls.Add(allCategoriesButton);
 
             if (dt.Rows.Count > 0)
             {

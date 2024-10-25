@@ -97,5 +97,12 @@ namespace Restaurant_Management_System.views
             frm.ShowDialog();
             GetData();
         }
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            string RptType = "Supplier";
+            frmReportView frm = new frmReportView(RptType);
+            frm.ShowDialog();
+        }
     }
 }

@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+
 
 namespace Restaurant_Management_System.Models
 {
@@ -49,6 +52,11 @@ namespace Restaurant_Management_System.Models
             this.Close();
         }
 
+        private CrystalDecisions.CrystalReports.Engine.ReportDocument cr = new CrystalDecisions.CrystalReports.Engine.ReportDocument();
+
+        static string Crypath = "";
+
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             connect();
@@ -70,6 +78,10 @@ namespace Restaurant_Management_System.Models
 
             AddMessageBox.Show("Order Paid Successfully");
             this.Close();
+
+            //printing 
+            frmReciept frm = new frmReciept(MainID);
+            frm.Show();
 
         }
 

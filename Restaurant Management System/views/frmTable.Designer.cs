@@ -45,6 +45,7 @@ namespace Restaurant_Management_System.views
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.btnAddTable = new Guna.UI2.WinForms.Guna2Button();
             this.DeMessaegBox = new Guna.UI2.WinForms.Guna2MessageDialog();
+            this.brnReport = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.guna2DataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -242,11 +243,32 @@ namespace Restaurant_Management_System.views
             this.DeMessaegBox.Style = Guna.UI2.WinForms.MessageDialogStyle.Default;
             this.DeMessaegBox.Text = null;
             // 
+            // brnReport
+            // 
+            this.brnReport.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(87)))), ((int)(((byte)(255)))));
+            this.brnReport.BorderRadius = 12;
+            this.brnReport.BorderThickness = 2;
+            this.brnReport.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.brnReport.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.brnReport.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.brnReport.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.brnReport.FillColor = System.Drawing.Color.Transparent;
+            this.brnReport.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.brnReport.ForeColor = System.Drawing.Color.Black;
+            this.brnReport.ImageSize = new System.Drawing.Size(28, 28);
+            this.brnReport.Location = new System.Drawing.Point(566, 19);
+            this.brnReport.Name = "brnReport";
+            this.brnReport.Size = new System.Drawing.Size(180, 45);
+            this.brnReport.TabIndex = 12;
+            this.brnReport.Text = "Generate Report";
+            this.brnReport.Click += new System.EventHandler(this.brnReport_Click);
+            // 
             // frmTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1115, 666);
+            this.Controls.Add(this.brnReport);
             this.Controls.Add(this.btnAddTable);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.guna2DataGridView1);
@@ -277,5 +299,6 @@ namespace Restaurant_Management_System.views
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
         private Guna.UI2.WinForms.Guna2MessageDialog DeMessaegBox;
+        private Guna.UI2.WinForms.Guna2Button brnReport;
     }
 }

@@ -115,6 +115,9 @@ namespace Restaurant_Management_System.views
 
         }
 
+        private void brnReport_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

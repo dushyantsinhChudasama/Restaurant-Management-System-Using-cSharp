@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Table">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MainID" type="xs:int" minOccurs="0" />
+              <xs:element name="aDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="aTime" type="xs:duration" minOccurs="0" />
+              <xs:element name="status" type="xs:string" minOccurs="0" />
+              <xs:element name="orderType" type="xs:string" minOccurs="0" />
+              <xs:element name="total" type="xs:double" minOccurs="0" />
+              <xs:element name="recieved" type="xs:double" minOccurs="0" />
+              <xs:element name="change" type="xs:double" minOccurs="0" />
+              <xs:element name="isSpecial" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="customer_name" type="xs:string" minOccurs="0" />
+              <xs:element name="DetailID" type="xs:int" minOccurs="0" />
+              <xs:element name="MainID1" type="xs:int" minOccurs="0" />
+              <xs:element name="proID" type="xs:int" minOccurs="0" />
+              <xs:element name="qty" type="xs:int" minOccurs="0" />
+              <xs:element name="price" type="xs:double" minOccurs="0" />
+              <xs:element name="amount" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

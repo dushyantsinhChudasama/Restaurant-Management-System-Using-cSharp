@@ -1,4 +1,5 @@
 ﻿using Restaurant_Management_System.Models;
+using Restaurant_Management_System.views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -110,6 +111,13 @@ namespace Restaurant_Management_System
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void brnReport_Click(object sender, EventArgs e)
+        {
+            string RptType = "Staff";
+            frmReportView frm = new frmReportView(RptType);
+            frm.ShowDialog();
         }
     }
 }

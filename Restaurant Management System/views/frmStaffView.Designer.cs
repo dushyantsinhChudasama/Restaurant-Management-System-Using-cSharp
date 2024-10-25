@@ -35,10 +35,6 @@ namespace Restaurant_Management_System
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2DataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.btnAddStaff = new Guna.UI2.WinForms.Guna2Button();
-            this.DeletMessaegBox = new Guna.UI2.WinForms.Guna2MessageDialog();
             this.dgvSno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +43,11 @@ namespace Restaurant_Management_System
             this.dgvSalary = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvedit = new System.Windows.Forms.DataGridViewImageColumn();
             this.dgvdelete = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btnAddStaff = new Guna.UI2.WinForms.Guna2Button();
+            this.DeletMessaegBox = new Guna.UI2.WinForms.Guna2MessageDialog();
+            this.brnReport = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.guna2DataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -142,60 +143,6 @@ namespace Restaurant_Management_System
             this.guna2DataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.guna2DataGridView1_CellClick);
             this.guna2DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.guna2DataGridView1_CellContentClick);
             // 
-            // dataGridViewImageColumn1
-            // 
-            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewImageColumn1.FillWeight = 50F;
-            this.dataGridViewImageColumn1.HeaderText = "";
-            this.dataGridViewImageColumn1.Image = global::Restaurant_Management_System.Properties.Resources.edit;
-            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn1.MinimumWidth = 50;
-            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            this.dataGridViewImageColumn1.ReadOnly = true;
-            this.dataGridViewImageColumn1.Width = 50;
-            // 
-            // dataGridViewImageColumn2
-            // 
-            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewImageColumn2.FillWeight = 50F;
-            this.dataGridViewImageColumn2.HeaderText = "";
-            this.dataGridViewImageColumn2.Image = global::Restaurant_Management_System.Properties.Resources.delete;
-            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn2.MinimumWidth = 50;
-            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
-            this.dataGridViewImageColumn2.ReadOnly = true;
-            this.dataGridViewImageColumn2.Width = 50;
-            // 
-            // btnAddStaff
-            // 
-            this.btnAddStaff.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(87)))), ((int)(((byte)(255)))));
-            this.btnAddStaff.BorderRadius = 12;
-            this.btnAddStaff.BorderThickness = 2;
-            this.btnAddStaff.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnAddStaff.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnAddStaff.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnAddStaff.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnAddStaff.FillColor = System.Drawing.Color.Transparent;
-            this.btnAddStaff.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddStaff.ForeColor = System.Drawing.Color.Black;
-            this.btnAddStaff.Image = global::Restaurant_Management_System.Properties.Resources.addIcons;
-            this.btnAddStaff.ImageSize = new System.Drawing.Size(28, 28);
-            this.btnAddStaff.Location = new System.Drawing.Point(794, 27);
-            this.btnAddStaff.Name = "btnAddStaff";
-            this.btnAddStaff.Size = new System.Drawing.Size(149, 32);
-            this.btnAddStaff.TabIndex = 12;
-            this.btnAddStaff.Text = "Add New Staff";
-            this.btnAddStaff.Click += new System.EventHandler(this.btnAddStaff_Click);
-            // 
-            // DeletMessaegBox
-            // 
-            this.DeletMessaegBox.Buttons = Guna.UI2.WinForms.MessageDialogButtons.YesNo;
-            this.DeletMessaegBox.Caption = "RMS";
-            this.DeletMessaegBox.Icon = Guna.UI2.WinForms.MessageDialogIcon.Question;
-            this.DeletMessaegBox.Parent = null;
-            this.DeletMessaegBox.Style = Guna.UI2.WinForms.MessageDialogStyle.Light;
-            this.DeletMessaegBox.Text = null;
-            // 
             // dgvSno
             // 
             this.dgvSno.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -261,11 +208,86 @@ namespace Restaurant_Management_System
             this.dgvdelete.ReadOnly = true;
             this.dgvdelete.Width = 50;
             // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn1.FillWeight = 50F;
+            this.dataGridViewImageColumn1.HeaderText = "";
+            this.dataGridViewImageColumn1.Image = global::Restaurant_Management_System.Properties.Resources.edit;
+            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn1.MinimumWidth = 50;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.ReadOnly = true;
+            this.dataGridViewImageColumn1.Width = 50;
+            // 
+            // dataGridViewImageColumn2
+            // 
+            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn2.FillWeight = 50F;
+            this.dataGridViewImageColumn2.HeaderText = "";
+            this.dataGridViewImageColumn2.Image = global::Restaurant_Management_System.Properties.Resources.delete;
+            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn2.MinimumWidth = 50;
+            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
+            this.dataGridViewImageColumn2.ReadOnly = true;
+            this.dataGridViewImageColumn2.Width = 50;
+            // 
+            // btnAddStaff
+            // 
+            this.btnAddStaff.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(87)))), ((int)(((byte)(255)))));
+            this.btnAddStaff.BorderRadius = 12;
+            this.btnAddStaff.BorderThickness = 2;
+            this.btnAddStaff.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnAddStaff.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnAddStaff.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnAddStaff.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnAddStaff.FillColor = System.Drawing.Color.Transparent;
+            this.btnAddStaff.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddStaff.ForeColor = System.Drawing.Color.Black;
+            this.btnAddStaff.Image = global::Restaurant_Management_System.Properties.Resources.addIcons;
+            this.btnAddStaff.ImageSize = new System.Drawing.Size(28, 28);
+            this.btnAddStaff.Location = new System.Drawing.Point(794, 27);
+            this.btnAddStaff.Name = "btnAddStaff";
+            this.btnAddStaff.Size = new System.Drawing.Size(149, 32);
+            this.btnAddStaff.TabIndex = 12;
+            this.btnAddStaff.Text = "Add New Staff";
+            this.btnAddStaff.Click += new System.EventHandler(this.btnAddStaff_Click);
+            // 
+            // DeletMessaegBox
+            // 
+            this.DeletMessaegBox.Buttons = Guna.UI2.WinForms.MessageDialogButtons.YesNo;
+            this.DeletMessaegBox.Caption = "RMS";
+            this.DeletMessaegBox.Icon = Guna.UI2.WinForms.MessageDialogIcon.Question;
+            this.DeletMessaegBox.Parent = null;
+            this.DeletMessaegBox.Style = Guna.UI2.WinForms.MessageDialogStyle.Light;
+            this.DeletMessaegBox.Text = null;
+            // 
+            // brnReport
+            // 
+            this.brnReport.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(87)))), ((int)(((byte)(255)))));
+            this.brnReport.BorderRadius = 12;
+            this.brnReport.BorderThickness = 2;
+            this.brnReport.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.brnReport.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.brnReport.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.brnReport.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.brnReport.FillColor = System.Drawing.Color.Transparent;
+            this.brnReport.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.brnReport.ForeColor = System.Drawing.Color.Black;
+            this.brnReport.ImageSize = new System.Drawing.Size(28, 28);
+            this.brnReport.Location = new System.Drawing.Point(598, 25);
+            this.brnReport.Name = "brnReport";
+            this.brnReport.Size = new System.Drawing.Size(180, 45);
+            this.brnReport.TabIndex = 15;
+            this.brnReport.Text = "Generate Report";
+            this.brnReport.Click += new System.EventHandler(this.brnReport_Click);
+            // 
             // frmStaffView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(981, 597);
+            this.Controls.Add(this.brnReport);
             this.Controls.Add(this.guna2DataGridView1);
             this.Controls.Add(this.guna2Separator1);
             this.Controls.Add(this.btnAddStaff);
@@ -297,5 +319,6 @@ namespace Restaurant_Management_System
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSalary;
         private System.Windows.Forms.DataGridViewImageColumn dgvedit;
         private System.Windows.Forms.DataGridViewImageColumn dgvdelete;
+        private Guna.UI2.WinForms.Guna2Button brnReport;
     }
 }

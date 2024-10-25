@@ -109,5 +109,12 @@ namespace Restaurant_Management_System.views
         {
 
         }
+
+        private void brnReport_Click(object sender, EventArgs e)
+        {
+            string RptType = "Category";
+            frmReportView frm = new frmReportView(RptType);
+            frm.ShowDialog();
+        }
     }
 }

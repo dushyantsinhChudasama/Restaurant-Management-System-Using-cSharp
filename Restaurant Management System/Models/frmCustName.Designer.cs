@@ -53,7 +53,7 @@ namespace Restaurant_Management_System.Models
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(594, 76);
+            this.guna2Panel1.Size = new System.Drawing.Size(554, 76);
             this.guna2Panel1.TabIndex = 5;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
@@ -87,9 +87,9 @@ namespace Restaurant_Management_System.Models
             this.guna2Panel2.Controls.Add(this.btnClose);
             this.guna2Panel2.Controls.Add(this.btnSave);
             this.guna2Panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.guna2Panel2.Location = new System.Drawing.Point(0, 297);
+            this.guna2Panel2.Location = new System.Drawing.Point(0, 273);
             this.guna2Panel2.Name = "guna2Panel2";
-            this.guna2Panel2.Size = new System.Drawing.Size(594, 63);
+            this.guna2Panel2.Size = new System.Drawing.Size(554, 63);
             this.guna2Panel2.TabIndex = 13;
             // 
             // btnClose
@@ -192,7 +192,7 @@ namespace Restaurant_Management_System.Models
             // frmCustName
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(594, 360);
+            this.ClientSize = new System.Drawing.Size(554, 336);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtCustomerName);
