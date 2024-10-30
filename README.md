@@ -22,6 +22,10 @@ A comprehensive Restaurant Management System built in C# for efficiently managin
 - **Backend**: C#
 - **Database**: SQL Server
 
+## Database Setup
+
+The `RMS.mdf` database file is included in the root directory of the project (`Restaurant-Management-System-Using-cSharp/RMS.mdf`). No additional setup is needed; ensure your SQL Server instance is configured to accept the `.mdf` file.
+
 ## Login Information
 
 When you start the application, it will display a login page. Use the following credentials to access the system:
