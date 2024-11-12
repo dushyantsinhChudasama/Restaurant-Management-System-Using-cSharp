@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +23,9 @@ namespace Restaurant_Management_System.Models
         {
             guna2DataGridView1.BorderStyle = BorderStyle.FixedSingle;
             AddCategory();
+
+            dateTimePicker1.CustomFormat = " "; // Blank format
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
 
             ProductPanel.Controls.Clear();
             LoadProducts();
@@ -264,8 +267,18 @@ namespace Restaurant_Management_System.Models
                 return;
             }
 
+            // Calculate the actual total
+            double actualTotal = 0.0;
+            foreach (DataGridViewRow row in guna2DataGridView1.Rows)
+            {
+                actualTotal += Convert.ToDouble(row.Cells["dgvAmount"].Value);
+            }
+
             string qryMain;
             string qryDetail;
+
+            // Get the date selected in the DateTimePicker (without time)
+            DateTime selectedDate = dateTimePicker1.Value.Date; // Get only the date part
 
             // Determine if we are inserting or updating the main order
             if (MainID == 0) // Insert
@@ -289,11 +302,11 @@ namespace Restaurant_Management_System.Models
                 // Save or update the main order details
                 SqlCommand cmdMain = new SqlCommand(qryMain, con);
                 cmdMain.Parameters.AddWithValue("@ID", MainID);
-                cmdMain.Parameters.AddWithValue("@aDate", DateTime.Now.Date);
+                cmdMain.Parameters.AddWithValue("@aDate", selectedDate);  // Pass only the date part here
                 cmdMain.Parameters.AddWithValue("@aTime", DateTime.Now.ToShortTimeString());
                 cmdMain.Parameters.AddWithValue("@status", "Pending");
                 cmdMain.Parameters.AddWithValue("@orderType", OrderType);
-                cmdMain.Parameters.AddWithValue("@total", 0.0);  // Placeholder; will be updated on payment
+                cmdMain.Parameters.AddWithValue("@total", actualTotal);  // Use the calculated total
                 cmdMain.Parameters.AddWithValue("@recieved", 0.0);
                 cmdMain.Parameters.AddWithValue("@change", 0.0);
                 cmdMain.Parameters.AddWithValue("@isSpecial", 1);
@@ -346,6 +359,8 @@ namespace Restaurant_Management_System.Models
         }
 
 
+
+
         private void ResetForm()
         {
             // Reset the form to its initial state
@@ -358,6 +373,29 @@ namespace Restaurant_Management_System.Models
         private void btnExit_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            dateTimePicker1.CustomFormat = "MM/dd/yyyy";
+
+
+        }
+
+        private void ClearDateTimePicker()
+        {
+            dateTimePicker1.CustomFormat = " "; // Reset to blank format
+        }
+
+        private void btnNew_Click_1(object sender, EventArgs e)
+        {
+            MainID = 0;
+            detaildID = 0;
+            lblTotal.Text = "";
+            guna2DataGridView1.Rows.Clear();
+
+            // Clear DateTimePicker
+            ClearDateTimePicker();
         }
     }
 }
