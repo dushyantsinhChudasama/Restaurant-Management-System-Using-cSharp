@@ -1,4 +1,4 @@
-﻿using Restaurant_Management_System.Models;
+using Restaurant_Management_System.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,7 +46,7 @@ namespace Restaurant_Management_System.views
 
             flowLayoutPanel1.Controls.Clear();
 
-            string qry1 = @"select * from tblMain_tbl where status = 'Pending'";
+            string qry1 = @"select * from tblMain_tbl where status = 'Pending' and isSpecial = 0";
             SqlCommand cmd1 = new SqlCommand(qry1, con);
             DataTable dt1 = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd1);
