@@ -1,4 +1,4 @@
-﻿using Restaurant_Management_System.Models;
+using Restaurant_Management_System.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,7 +43,6 @@ namespace Restaurant_Management_System.views
         private void GetOrders()
         {
             connect();
-
             flowLayoutPanel1.Controls.Clear();
 
             string qry1 = @"select * from tblMain_tbl where status = 'Complete'";
@@ -65,7 +64,6 @@ namespace Restaurant_Management_System.views
                 p1.Margin = new Padding(10, 10, 10, 10);
 
                 FlowLayoutPanel p2 = new FlowLayoutPanel();
-                p2 = new FlowLayoutPanel();
                 p2.BackColor = Color.FromArgb(90, 87, 255);
                 p2.AutoSize = true;
                 p2.Width = 230;
@@ -93,7 +91,7 @@ namespace Restaurant_Management_System.views
                 lb4.Margin = new Padding(10, 5, 3, 0);
                 lb4.AutoSize = true;
 
-                lb1.Text = "Bill N0 : " + dt1.Rows[i]["MainID"].ToString();
+                lb1.Text = "Bill No : " + dt1.Rows[i]["MainID"].ToString();
                 lb2.Text = "Billing Date : " + dt1.Rows[i]["aDate"].ToString();
                 lb3.Text = "Bill Time : " + dt1.Rows[i]["aTime"].ToString();
                 lb4.Text = "Bill Type : " + dt1.Rows[i]["orderType"].ToString();
@@ -103,27 +101,32 @@ namespace Restaurant_Management_System.views
                 p2.Controls.Add(lb3);
                 p2.Controls.Add(lb4);
 
+                // Check if the order is a special order
+                if (dt1.Rows[i]["isSpecial"] != DBNull.Value && Convert.ToInt32(dt1.Rows[i]["isSpecial"]) == 1)
+                {
+                    Label lbSpecial = new Label();
+                    lbSpecial.ForeColor = Color.Yellow;
+                    lbSpecial.Margin = new Padding(10, 5, 3, 0);
+                    lbSpecial.AutoSize = true;
+                    lbSpecial.Text = "SPECIAL Order";
+                    p2.Controls.Add(lbSpecial); // Add the special order label under Bill Type
+                }
 
-                //displaying uppwr portion like, blno, time, data type
+                // Add the header section to the main panel
                 p1.Controls.Add(p2);
 
-                //adding products
-
-                int mid = 0;
-                mid = Convert.ToInt32(dt1.Rows[i]["MainID"].ToString());
-
+                // Adding products
+                int mid = Convert.ToInt32(dt1.Rows[i]["MainID"].ToString());
                 string qry2 = @"select * from tblMain_tbl m
-                                inner join Details_tbl d on m.MainID = d.MainID
-                                inner join products_tbl p on p.pID = d.proID
-                                where m.MainID = '" + mid + "'";
-
+                        inner join Details_tbl d on m.MainID = d.MainID
+                        inner join products_tbl p on p.pID = d.proID
+                        where m.MainID = '" + mid + "'";
                 SqlCommand cmd2 = new SqlCommand(qry2, con);
                 DataTable dt2 = new DataTable();
                 SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
                 da2.Fill(dt2);
 
-                //displaying items
-
+                // Displaying items
                 for (int j = 0; j < dt2.Rows.Count; j++)
                 {
                     Label lb5 = new Label();
@@ -132,42 +135,37 @@ namespace Restaurant_Management_System.views
                     lb5.AutoSize = true;
 
                     int no = j + 1;
-
-                    lb5.Text = "" + no + " " + dt2.Rows[j]["pName"].ToString() + " " + dt2.Rows[j]["qty"].ToString();
+                    lb5.Text = $"{no} {dt2.Rows[j]["pName"]} {dt2.Rows[j]["qty"]}";
 
                     p1.Controls.Add(lb5);
                 }
 
-                //Button to complete the order status
+                // Button for "Fast Cash"
                 Guna.UI2.WinForms.Guna2Button b1 = new Guna.UI2.WinForms.Guna2Button();
                 b1.AutoRoundedCorners = true;
                 b1.Size = new Size(170, 35);
                 b1.FillColor = Color.FromArgb(241, 85, 126);
                 b1.Margin = new Padding(20, 5, 3, 10);
                 b1.Text = "Fast Cash";
-                b1.Tag = dt1.Rows[i]["MainID"].ToString(); //to store the ID of Order
-
+                b1.Tag = dt1.Rows[i]["MainID"].ToString();
                 b1.Click += new EventHandler(b_click);
 
-                //button to delete or cancel order
-
+                // Button for "Check Out"
                 Guna.UI2.WinForms.Guna2Button b2 = new Guna.UI2.WinForms.Guna2Button();
                 b2.AutoRoundedCorners = true;
                 b2.Size = new Size(170, 35);
                 b2.FillColor = Color.FromArgb(241, 85, 126);
                 b2.Margin = new Padding(20, 5, 3, 10);
                 b2.Text = "Check Out";
-                b2.Tag = dt1.Rows[i]["MainID"].ToString(); //to store the ID of Order
-
+                b2.Tag = dt1.Rows[i]["MainID"].ToString();
                 b2.Click += new EventHandler(b2_click);
-
 
                 p1.Controls.Add(b1);
                 p1.Controls.Add(b2);
-
                 flowLayoutPanel1.Controls.Add(p1);
             }
         }
+
 
         private void b2_click(object sender, EventArgs e) // Check Out
         {
@@ -180,29 +178,26 @@ namespace Restaurant_Management_System.views
         }
 
 
-        private void b_click(object sender, EventArgs e) //fastcash
+        private void b_click(object sender, EventArgs e) // Fast Cash
         {
-                Guna.UI2.WinForms.Guna2Button btn = (Guna.UI2.WinForms.Guna2Button)sender;
-                int mainID = Convert.ToInt32(btn.Tag); // Retrieve MainID from the button's Tag
+            Guna.UI2.WinForms.Guna2Button btn = (Guna.UI2.WinForms.Guna2Button)sender;
+            int mainID = Convert.ToInt32(btn.Tag); // Retrieve MainID from the button's Tag
 
-                connect();
+            connect();
 
-                //Retrieve the total amount from the database for this MainID
-                string qry = "SELECT total FROM tblMain_tbl WHERE MainID = @MainID";
-                SqlCommand cmd = new SqlCommand(qry, con);
-                cmd.Parameters.AddWithValue("@MainID", mainID);
+            // Retrieve the total amount from the database for this MainID
+            string qry = "SELECT total FROM tblMain_tbl WHERE MainID = @MainID";
+            SqlCommand cmd = new SqlCommand(qry, con);
+            cmd.Parameters.AddWithValue("@MainID", mainID);
 
-                double totalAmount = (double)cmd.ExecuteScalar(); 
+            object result = cmd.ExecuteScalar();
 
-                if (totalAmount == 0)
-                {
-                    MessageBox.Show("Error retrieving the total amount.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
+            // Check if the result is not null and can be converted to a double
+            double totalAmount = 0;
+            if (result != DBNull.Value && double.TryParse(result.ToString(), out totalAmount))
+            {
                 // Step 2: Update the status to 'Paid' and set received amount to total
                 string updateQuery = @"UPDATE tblMain_tbl SET recieved = @received, status = 'Paid' WHERE MainID = @MainID";
-
                 SqlCommand updateCmd = new SqlCommand(updateQuery, con);
                 updateCmd.Parameters.AddWithValue("@received", totalAmount); // Received amount is equal to total
                 updateCmd.Parameters.AddWithValue("@MainID", mainID);
@@ -219,11 +214,16 @@ namespace Restaurant_Management_System.views
                 {
                     MessageBox.Show("Failed to update the order status.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Error retrieving the total amount. The value may be missing or invalid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-                //add code for crystal report here
-            
-
+            // Add code for crystal report here if needed
         }
+
+
 
         private void frmBillingview_Load(object sender, EventArgs e)
         {
