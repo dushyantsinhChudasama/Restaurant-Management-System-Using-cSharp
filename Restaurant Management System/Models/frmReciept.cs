@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Restaurant_Management_System.Models
@@ -41,10 +35,20 @@ namespace Restaurant_Management_System.Models
             SqlDataAdapter da;
             DataSet ds = new DataSet();
             string query = @"
-                            SELECT m.*, d.*
-                            FROM tblMain_tbl m
-                            LEFT JOIN Details_tbl d ON m.MainID = d.MainID
-                            WHERE m.MainID = @MainID";
+                            SELECT 
+                                m.*, 
+                                d.qty, 
+                                d.price, 
+                                d.amount, 
+                                p.pName AS product_name
+                            FROM 
+                                tblMain_tbl m
+                            LEFT JOIN 
+                                Details_tbl d ON m.MainID = d.MainID
+                            LEFT JOIN 
+                                products_tbl p ON d.proID = p.pID
+                            WHERE 
+                                m.MainID = @MainID";
 
             da = new SqlDataAdapter(query, con);
             da.SelectCommand.Parameters.AddWithValue("@MainID", MainID); // Use parameterized query

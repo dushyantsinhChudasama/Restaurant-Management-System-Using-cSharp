@@ -171,9 +171,9 @@ namespace Restaurant_Management_System.Models
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(14, 197);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 21);
+            this.label4.Size = new System.Drawing.Size(74, 21);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Change";
+            this.label4.Text = "Discount";
             // 
             // guna2Panel2
             // 

@@ -221,7 +221,7 @@ namespace Restaurant_Management_System.Models
             "Cashier",
             "Waiter",
             "Cleaning",
-            "Managet",
+            "Manager",
             "Other"});
             this.cbRole.Location = new System.Drawing.Point(12, 238);
             this.cbRole.Name = "cbRole";
